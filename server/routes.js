@@ -2,13 +2,17 @@
 * Author: Deepankar Malhan
 */
 
+var AuthAPI = require('./API/AuthenticationAPI');
+
 module.exports = function(expressApp, path) {
   // -------------------------
   // Authentication Routes
   // -------------------------
   expressApp.post('/api/auth/login', function(req, res) {
     res.set('Content-Type', 'application/json');
-    res.send('{"message": "Hello World!"}');
+    AuthAPI.login(req, function(authObj) {
+      res.send(JSON.stringify(authObj));
+    });
   });
 
   // -------------------------------------------------------------------------
