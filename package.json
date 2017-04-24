@@ -1,9 +1,16 @@
 {
   "name": "food-diary-backend",
   "version": "1.0.0",
-  "description": "Food Diary backend application containing APIs to be accessed by the website, C application, and mobile users.\"",
-  "main": "Server.js",
+  "description": "Food Diary backend application containing APIs to be accessed by the website, C application, and mobile users.",
+  "scripts": {
+    "start": "node server",
+    "heroku-postbuild": "cd client/ && npm install --only=dev && npm install && npm run build"
+  },
   "repository": "https://github.com/deepankarmalhan/food-diary-website/",
+  "private": true,
   "author": "Deepankar Malhan",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
 }
