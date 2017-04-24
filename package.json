@@ -1,0 +1,9 @@
+{
+  "name": "food-diary-backend",
+  "version": "1.0.0",
+  "description": "Food Diary backend application containing APIs to be accessed by the website, C application, and mobile users.\"",
+  "main": "Server.js",
+  "repository": "https://github.com/deepankarmalhan/food-diary-website/",
+  "author": "Deepankar Malhan",
+  "license": "MIT"
+}
