@@ -11,6 +11,10 @@
   "author": "Deepankar Malhan",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.15.2"
+    "bcryptjs": "^2.4.3",
+    "bluebird": "^3.5.0",
+    "express": "^4.15.2",
+    "mongoose": "^4.9.6",
+    "node-env-file": "^0.1.8"
   }
 }

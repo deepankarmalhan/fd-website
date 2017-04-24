@@ -7,7 +7,8 @@ module.exports = function(expressApp, path) {
   // Authentication Routes
   // -------------------------
   expressApp.post('/api/auth/login', function(req, res) {
-    return res.sendStatus(200);
+    res.set('Content-Type', 'application/json');
+    res.send('{"message": "Hello World!"}');
   });
 
   // -------------------------------------------------------------------------
