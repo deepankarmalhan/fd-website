@@ -26,7 +26,7 @@ module.exports = function(expressApp, path) {
   // All remaining requests return to the React App so it can handle routing
   // -------------------------------------------------------------------------
   expressApp.get('*', function(req, res) {
-    //res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+    res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
     res.send('Hello World!');
   });
 };

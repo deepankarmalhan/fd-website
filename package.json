@@ -17,7 +17,6 @@
     "express": "^4.15.2",
     "mongoose": "^4.9.6",
     "mongoose-unique-validator": "^1.0.5",
-    "node-env-file": "^0.1.8",
-    "ursa": "^0.9.4"
+    "node-env-file": "^0.1.8"
   }
 }
