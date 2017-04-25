@@ -15,6 +15,13 @@ module.exports = function(expressApp, path) {
     });
   });
 
+  expressApp.post('/api/auth/register', function(req, res) {
+    res.set('Content-Type', 'application/json');
+    AuthAPI.register(req, function(authObj) {
+      res.send(JSON.stringify(authObj));
+    });
+  });
+
   // -------------------------------------------------------------------------
   // All remaining requests return to the React App so it can handle routing
   // -------------------------------------------------------------------------

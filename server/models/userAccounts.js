@@ -4,23 +4,21 @@
 
 var MongoDB = require('../API/MongooseAPI');
 var mongoose = require('mongoose');
+var uniqueValidator = require('mongoose-unique-validator');
 
 var dbConnection = MongoDB.getDBInstance();
 
-var NameSchema = mongoose.Schema({
-  first: String,
-  last: String
+var userAccSchema = mongoose.Schema({
+  firstName: String,
+  lastName: String,
+  userName: { type: String, required: true, unique: true },
+  passwd: { type: String, require: true },
+  userEmail: {type: String, require: true, index: true, unique: true, uniqueCaseInsensitive: true},
+  accountCreatedAt: {type: Date, default: Date.now},
+  imgurUserAccessToken: { type: String, required: true },
+  imgurUserRefreshToken: { type: String, required: true },
 });
 
-var userAccSchema = mongoose.Schema({
-  userId: mongoose.Schema.Types.ObjectId,
-  name: NameSchema,
-  userName: { type: String, required: true, index: { unique: true }},
-  passwd: { type: String, require: true },
-  userEmail: {type: String, require: true},
-  accountCreatedAt: {type: Date, default: Date.now},
-  imgurUserAccessToken: String,
-  imgurUserRefreshToken: String,
-});
+userAccSchema.plugin(uniqueValidator);
 
 module.exports = dbConnection.model('UserAccount', userAccSchema);
