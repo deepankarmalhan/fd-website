@@ -11,16 +11,15 @@ module.exports = {
   login: function(req, callback) {
 
     UserAccount.findOne({userName: req.body.usernamelogin}).then(function(user, err) {
-      // if(err || !user) {
-      //   return callback(err);
-      // }
-
-      // Temp user to be sent through the callback
+      if(err || !user) {
+        return callback(err);
+      }
+      console.log(`[INFO]: Inside the findOne method, found ${user}`);
       bcrypt.compare(req.body.passwdlogin, user.passwd, function(err, response) {
         if(err) {
           return callback({"message": "error happened?"});
         }
-
+        console.log(`[INFO]: Comparing the user, response was ${response}`);
         let tempUser = user;
         tempUser.passwd = null;
 
