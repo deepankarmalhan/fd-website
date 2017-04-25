@@ -9,9 +9,10 @@ var mongoose = require('mongoose');
 
 module.exports = {
   login: function(req, callback) {
-
+    console.log(`[INFO]: findOne function started executing`);
     UserAccount.findOne({userName: req.body.usernamelogin}).then(function(user, err) {
       if(err || !user) {
+        console.log(`[INFO]: There was an error in findOne`);
         return callback(err);
       }
       console.log(`[INFO]: Inside the findOne method, found ${user}`);
@@ -33,6 +34,7 @@ module.exports = {
         });
       });
     });
+    console.log(`[INFO]: findOne function finsihed executing`);
   },
   register: function(req, callback) {
     // TODO: Check if the required fields are filled or not.
