@@ -3,7 +3,10 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var MongoDB = require('./API/MongooseAPI');
-require('dotenv').config();
+
+if(process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 
 const expressApp = express();
 const PORT = process.env.PORT || 50001;
