@@ -9,18 +9,17 @@ var mongoose = require('mongoose');
 
 module.exports = {
   login: function(req, callback) {
-    console.log(`[INFO]: findOne function started executing`);
+
     UserAccount.findOne({userName: req.body.usernamelogin}, function(err, user) {
       if(err || !user) {
-        console.log(`[INFO]: There was an error in findOne, user ${JSON.stringify(user)} and err ${JSON.stringify(err)}`);
         return callback(err);
       }
-      console.log(`[INFO]: Inside the findOne method, found ${user}`);
+
       bcrypt.compare(req.body.passwdlogin, user.passwd, function(err, response) {
         if(err) {
-          return callback({"message": "error happened?"});
+          return callback({"message": "Error comparing the passwords for login"});
         }
-        console.log(`[INFO]: Comparing the user, response was ${response}`);
+
         let tempUser = user;
         tempUser.passwd = null;
 
@@ -34,7 +33,6 @@ module.exports = {
         });
       });
     });
-    console.log(`[INFO]: findOne function finsihed executing`);
   },
   register: function(req, callback) {
     // TODO: Check if the required fields are filled or not.
