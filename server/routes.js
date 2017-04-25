@@ -10,9 +10,9 @@ module.exports = function(expressApp, path) {
   // -------------------------
   expressApp.post('/api/auth/login', function(req, res) {
     res.set('Content-Type', 'application/json');
-    console.log(`[INFO]: Login route activated, request is: ${JSON.stringify(req)}`);
+    console.log(`[INFO]: Login route activated, request is: ${req.body.usernamelogin} and ${req.body.passwdlogin}`);
     AuthAPI.login(req, function(authObj) {
-      console.log(`Returned from the login function, getting ready to send back ${authObj}`);
+      console.log(`Returned from the login function, getting ready to send back ${JOSN.stringify(authObj)}`);
       res.send(JSON.stringify(authObj));
     });
   });
