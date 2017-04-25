@@ -5,7 +5,7 @@
 var mongoose = require('mongoose');
 
 var MongoDB;
-var connectionURI = process.env.MONGOLAB_URI || `mongodb://localhost:${process.env.TEST_DB_PORT}/${process.env.TEST_DB_NAME}`;
+var connectionURI = process.env.MONGODB_URI || `mongodb://localhost:${process.env.TEST_DB_PORT}/${process.env.TEST_DB_NAME}`;
 var connectionOptions = { promiseLibrary: require('bluebird')};
 
 module.exports = {
