@@ -10,9 +10,9 @@ var mongoose = require('mongoose');
 module.exports = {
   login: function(req, callback) {
     console.log(`[INFO]: findOne function started executing`);
-    UserAccount.findOne({userName: req.body.usernamelogin}).then(function(user, err) {
+    UserAccount.findOne({userName: req.body.usernamelogin}, function(err, user) {
       if(err || !user) {
-        console.log(`[INFO]: There was an error in findOne`);
+        console.log(`[INFO]: There was an error in findOne, user ${JSON.stringify(user)} and err ${JSON.stringify(err)}`);
         return callback(err);
       }
       console.log(`[INFO]: Inside the findOne method, found ${user}`);

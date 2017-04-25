@@ -12,7 +12,7 @@ module.exports = function(expressApp, path) {
     res.set('Content-Type', 'application/json');
     console.log(`[INFO]: Login route activated, request is: ${req.body.usernamelogin} and ${req.body.passwdlogin}`);
     AuthAPI.login(req, function(authObj) {
-      console.log(`Returned from the login function, getting ready to send back ${JOSN.stringify(authObj)}`);
+      console.log(`Returned from the login function, getting ready to send back ${JSON.stringify(authObj)}`);
       res.send(JSON.stringify(authObj));
     });
   });
