@@ -3,10 +3,11 @@
 */
 
 var mongoose = require('mongoose');
+var Promise = require('bluebird');
 
 var MongoDB;
 var connectionURI = process.env.MONGODB_URI || `mongodb://localhost:${process.env.TEST_DB_PORT}/${process.env.TEST_DB_NAME}`;
-var connectionOptions = { promiseLibrary: require('bluebird')};
+var connectionOptions = { promiseLibrary: Promise };
 
 module.exports = {
   createConnection: function(callback) {

@@ -3,14 +3,51 @@
 */
 
 var AuthAPI = require('./API/AuthenticationAPI');
+var AcctManageAPI = require('./API/AcctManagementAPI');
+var MongoDB = require('./API/MongooseAPI');
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
 
 module.exports = function(expressApp, path) {
+  // --------------------------------
+  // Set the session middleware
+  // --------------------------------
+  expressApp.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: new MongoStore({
+      mongooseConnection: MongoDB.getDBInstance(),
+      touchAfter: 12 * 3600
+    })
+  }));
+
+  expressApp.get('/', function(req, res) {
+    req.session.reload(function(err) {
+      throw err;
+    });
+  });
+
+  expressApp.post('/', function(req, res) {
+    req.session.reload(function(err) {
+      throw err;
+    });
+  })
+
+  expressApp.get('/api/test-session', function(req, res) {
+    res.send(JSON.stringify(req.session));
+  });
+
   // -------------------------
   // Authentication Routes
   // -------------------------
   expressApp.post('/api/auth/login', function(req, res) {
     res.set('Content-Type', 'application/json');
     AuthAPI.login(req, function(authObj) {
+      if(typeof(authObj.error) === 'undefined') {
+        req.session.client = authObj;
+        return res.send(JSON.stringify({ message : "Successfully logged in", authenticated: true }));
+        }
       res.send(JSON.stringify(authObj));
     });
   });
@@ -18,8 +55,53 @@ module.exports = function(expressApp, path) {
   expressApp.post('/api/auth/register', function(req, res) {
     res.set('Content-Type', 'application/json');
     AuthAPI.register(req, function(authObj) {
+      if(typeof(authObj.error) === 'undefined') {
+        req.session.client = authObj;
+        return res.send(JSON.stringify({ message : "Successfully registered new account" }));
+      }
       res.send(JSON.stringify(authObj));
     });
+  });
+
+  expressApp.get('/api/auth/logout', function(req, res) {
+    if(req.session.client) {
+      req.session.destroy(function(err) {
+        if(err) {
+          return res.send(JSON.stringify({ message : "Could not logout properly", error: true }));
+        }
+        return res.send(JSON.stringify({ message : "Successfully logged out" }));
+      });
+    }
+    return res.send(JSON.stringify({ message : "Already logged out", error: true }));
+  });
+
+  // ---------------------------------
+  // Account management routes
+  // ---------------------------------
+
+  expressApp.post('/api/accmanage/updateacc', function(req, res) {
+    if(req.session.client) {
+      AcctManageAPI.updateAcc(req, function(updatedAcc) {
+        res.set('Content-Type', 'application/json');
+        return res.send(JSON.stringify(Object.assign({}, { message: "Successfully updated account" }, updatedAcc)));
+      });
+    }
+    res.send(JSON.stringify({ message: "Please login to update your account", error: true }));
+  });
+
+  expressApp.post('/api/accmanage/deleteacc', function(req, res) {
+    if(req.session.client.userName == req.body.usernamedeleteacc) {
+      AcctManageAPI.deleteAcc(req, function(err) {
+        res.set('Content-Type', 'application/json');
+
+        if(err) {
+          return res.send(JSON.stringify({ message: "Could not delete account", error: true }));
+        }
+
+        return res.send(JSON.stringify({ message: "Successfully deleted account", "username": req.body.usernamedeleteacc }));
+      });
+    }
+    res.send(JSON.stringify({ message: "Please re-enter your username properly, or login, to delete your account", error: true }))
   });
 
   // -------------------------------------------------------------------------
