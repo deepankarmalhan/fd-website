@@ -1,38 +1,37 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import classnames from 'classnames';
 import '../bulma.css'
 import '../font-awesome/css/font-awesome.min.css';
 
 export default class NavigationBar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isMobile: this.props.isMobile
+    };
+  }
+
   render() {
-    var navItem
-    var loginButton = <div>Home</div>;
-    if(this.props.loggedIn == false) {
-      loginButton = <div>Login | Register</div>;
-    }
     return (
       <header className="nav has-shadow">
           <div className="nav-left">
-            <a className="nav-item">
-              <Link className="title" to="/">Food Diary</Link>
-            </a>
+            <Link className="title" to="/">Food Diary</Link>
           </div>
 
-          <span class="nav-toggle">
+          <span className={ (this.state.isMobile) ? 'nav-toggle is-active' : 'nav-toggle'} onClick={this.toggleMobileNav}>
             <span></span>
             <span></span>
             <span></span>
           </span>
 
-          <div className="nav-right nav-menu">
-          <Link className="nav-item is-active" to="/">
-            {loginButton}
-          </Link>
-            <Link className="nav-item" to="/dashboard">
+          <div className={ (this.state.isMobile) ? 'nav-right nav-menu is-active' : 'nav-right nav-menu'}>
+            <Link className={(this.props.currentActivePage === 'Home')? "nav-item is-active" : "nav-item"} to="/">
+              {(this.props.loggedIn) ? 'Home' : 'Login | Register'}
+            </Link>
+            <Link className={(this.props.currentActivePage === 'Dashboard')? "nav-item is-active" : "nav-item"} to="/dashboard">
               Dashboard
             </Link>
-            <Link className="nav-item" to="/account">
+            <Link className={(this.props.currentActivePage === 'Account')? "nav-item is-active" : "nav-item"} to="/account">
               My Account
             </Link>
             <span className="nav-item">
@@ -46,5 +45,13 @@ export default class NavigationBar extends Component {
           </div>
       </header>
     );
+  }
+
+  toggleMobileNav = () => {
+    this.setState((prevState, props) => {
+      return {
+        isMobile: !prevState.isMobile
+      };
+    });
   }
 };
