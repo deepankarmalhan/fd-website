@@ -25,13 +25,13 @@ export default class NavigationBar extends Component {
           </span>
 
           <div className={ (this.state.isMobile) ? 'nav-right nav-menu is-active' : 'nav-right nav-menu'}>
-            <Link className={(this.props.currentActivePage === 'Home')? "nav-item is-active" : "nav-item"} to="/">
+            <Link className={(this.props.currentActivePage === 'Home')? "nav-item is-active" : "nav-item"} to="/auth">
               {(this.props.loggedIn) ? 'Home' : 'Login | Register'}
             </Link>
             <Link className={(this.props.currentActivePage === 'Dashboard')? "nav-item is-active" : "nav-item"} to="/dashboard">
               Dashboard
             </Link>
-            <Link className={(this.props.currentActivePage === 'Account')? "nav-item is-active" : "nav-item"} to="/account">
+            <Link className={(this.props.currentActivePage === 'Account')? "nav-item is-active" : "nav-item"} to="/myaccount">
               My Account
             </Link>
             <span className="nav-item">

@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
 import '../bulma.css';
+import LoginBox from './LoginBox';
+import RegisterBox from './RegisterBox';
 
 export default class AuthenticationBox extends Component {
   constructor(props) {
@@ -11,9 +14,14 @@ export default class AuthenticationBox extends Component {
   }
 
   render() {
-
+    var matchRoute = this.props.match.url;
     return (
-      <div></div>
+      <div>
+        <h1 className="title">AuthenticationBox rendered</h1>
+        <hr />
+        <Route path={`${matchRoute}/login`} component={LoginBox} />
+        <Route path={`${matchRoute}/register`} component={RegisterBox} />
+      </div>
     );
   }
 };

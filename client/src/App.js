@@ -1,11 +1,14 @@
 /* eslint-disable */
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import './bulma.css'
 import './font-awesome/css/font-awesome.min.css';
 import NavigationBar from './Views/NavigationBar';
 import Footer from './Views/Footer';
+import Home from './Views/Home';
 import AuthenticationBox from './Views/AuthenticationBox';
+import DashboardMainLayout from './Views/DashboardMainLayout';
+import AcctManagementLayout from './Views/AcctManagementLayout';
 
 class App extends Component {
   constructor(props) {
@@ -13,7 +16,7 @@ class App extends Component {
     this.state = {
       loggedIn: false,
       isMobile: false,
-      currentActivePage: 'Home'
+      currentActivePage: 'Home',
     };
     if(this.mobileCheck()) {
       this.setState({ isMobile: true });
@@ -32,18 +35,7 @@ class App extends Component {
   }
 
   render() {
-    var bodyText = (
-        <AuthenticationBox />
-    );
-
-    if(this.state.loggedIn) {
-      bodyText = (
-        <h1 className="title">
-          Welcome! Please use the Navigation Bar to use the application
-        </h1>
-      );
-    }
-
+    var matchRoute = this.props.match.url;
     return (
       <section className="hero is-primary is-fullheight is-bold">
         <div className="hero-head">
@@ -52,7 +44,10 @@ class App extends Component {
 
         <div className="hero-body">
           <div className="container has-text-centered">
-              {bodyText}
+              <Route path={`${matchRoute}auth`} component={AuthenticationBox} />
+              <Route path={`${matchRoute}dashboard`} component={DashboardMainLayout} />
+              <Route path={`${matchRoute}myaccount`} component={AcctManagementLayout} />
+              <Route exact path={matchRoute} component={Home} />
           </div>
         </div>
 
