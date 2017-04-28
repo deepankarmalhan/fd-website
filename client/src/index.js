@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import App from './App';
 import Home from './Views/Home';
-import AuthBox from './Views/AuthBox';
+import AuthenticationBox from './Views/AuthenticationBox';
 import LoginBox from './Views/LoginBox';
 import RegisterBox from './Views/RegisterBox';
 import DashboardMainLayout from './Views/DashboardMainLayout';
@@ -23,7 +23,7 @@ ReactDOM.render(
   <Router>
     <Route path="/" component={ App } >
       <IndexRoute component={Home} />
-      <Route path="auth" component={AuthBox}>
+      <Route path="auth" component={AuthenticationBox}>
         <Route path="login" component={LoginBox} />
         <Route path="register" component={RegisterBox} />
       </Route>
