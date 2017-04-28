@@ -16,7 +16,6 @@ class App extends Component {
     this.state = {
       loggedIn: false,
       isMobile: false,
-      currentActivePage: 'Home',
     };
     if(this.mobileCheck()) {
       this.setState({ isMobile: true });
@@ -37,13 +36,13 @@ class App extends Component {
   render() {
     var matchRoute = this.props.match.url;
     return (
-      <section className="hero is-primary is-fullheight is-bold">
+      <section className="hero is-light is-fullheight is-bold">
         <div className="hero-head">
           <NavigationBar currentActivePage={this.state.currentActivePage} loggedIn={this.state.loggedIn} isMobile={this.state.isMobile}/>
         </div>
 
         <div className="hero-body">
-          <div className="container has-text-centered">
+          <div className="container">
               <Route path={`${matchRoute}auth`} component={AuthenticationBox} />
               <Route path={`${matchRoute}dashboard`} component={DashboardMainLayout} />
               <Route path={`${matchRoute}myaccount`} component={AcctManagementLayout} />
