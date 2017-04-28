@@ -28,14 +28,8 @@ module.exports = function(expressApp, path) {
     });
   });
 
-  expressApp.post('/', function(req, res) {
-    req.session.reload(function(err) {
-      throw err;
-    });
-  })
-
-  expressApp.get('/api/test-session', function(req, res) {
-    res.send(JSON.stringify(req.session));
+  expressApp.put('/api/test-session',function(req, res) {
+    res.send(req.body);
   });
 
   // -------------------------
