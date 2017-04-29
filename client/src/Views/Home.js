@@ -7,7 +7,7 @@ export default class Home extends Component {
         <h1 className="title">Welcome to Food Diary, a CCSU CS 355 Spring'17 Project</h1>
         <hr />
 
-        <h2 className="subtitle"><strong>What this project is:</strong></h2>
+        <h2 className="subtitle"><strong>What is this project:</strong></h2>
         <p>
           People are becoming more conscious about their daily diet. Food and beverage manufacturers are becoming
           more aware in this public shift and are trying to create new products which appeal to the healthier sides
