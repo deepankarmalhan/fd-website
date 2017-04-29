@@ -16,6 +16,11 @@ MongoDB.createConnection(function(dbInstance) {
   expressApp.use(bodyParser.urlencoded({ extended: false }));
   expressApp.use(bodyParser.json());
   expressApp.use(cookieParser());
+  expressApp.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  })
 
   require('./routes')(expressApp, path);
 

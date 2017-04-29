@@ -5,12 +5,13 @@ import LoginBox from './LoginBox';
 import RegisterBox from './RegisterBox';
 
 export default class AuthenticationBox extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      authModeLogin: true,
-      formData: {}
-    };
+
+  switchLogin = () => {
+    this.props.history.push(`${this.props.match.url}`);
+  }
+
+  switchRegister = () => {
+    this.props.history.push(`${this.props.match.url}/register`);
   }
 
   render() {
@@ -21,7 +22,7 @@ export default class AuthenticationBox extends Component {
         <hr />
         <div className="columns">
           <div className="column is-half">
-            <article className="message is-primary">
+            <article className="message">
               <div className="message-body">
                 Please remember to use a dummy password! We did not buy a certificate to enable SSL
                 (thus making the backend server secure) because this is a demo website. Your password
@@ -46,8 +47,9 @@ export default class AuthenticationBox extends Component {
                   </a>
                 </p>
               </div>
-              <Route path={`${matchRoute}/login`} component={LoginBox} />
+              <hr />
               <Route path={`${matchRoute}/register`} component={RegisterBox} />
+              <Route exact path={matchRoute} component={LoginBox} />
             </div>
           </div>
         </div>

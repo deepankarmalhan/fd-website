@@ -25,7 +25,7 @@ export default class Home extends Component {
         <p>
           Please use the links above to register/login, and access your dashboard. This website is an supplementary
           interface to the <strong> C application that we have designed for a Raspberry Pi</strong>. It utilizes <a href="https://www.imgur.com" target="_blank"><u>Imgur</u></a> to
-          store the images of the food that you eat, so you will need to either create a new account or login to your existing Imgur account during the registeration process on this website.
+          store the images of the food that you eat, so you will need to either create a new account or login to your existing Imgur account during the registration process on this website.
         </p>
 
         <h2 className="subtitle"><strong>How it works:</strong></h2>
