@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import rp from 'request-promise';
 
 export default class RegisterBox extends Component {
   constructor(props) {
@@ -27,6 +28,7 @@ export default class RegisterBox extends Component {
     e.preventDefault();
     this.setState({ error: false });
   }
+
   registerForm = (e) => {
     e.preventDefault();
     if(
@@ -35,7 +37,39 @@ export default class RegisterBox extends Component {
       !document.getElementById('passwdregister').value
     ) {
       this.setState({ reqError: true });
+      return;
     }
+
+    var endpoint;
+    endpoint = (process.env.NODE_ENV === 'development') ? 'http://localhost:50001/api/auth/register' : 'https://fd-website.herokuapp.com/api/auth/register';
+
+    // If everything is in order, register the user
+    rp({
+      method: 'POST',
+      uri: endpoint,
+      body: {
+        firstnameregister: document.getElementById('firstnameregister').value,
+        lastnameregister: document.getElementById('lastnameregister').value,
+        usernameregister: document.getElementById('usernameregister').value,
+        passwdregister: document.getElementById('passwdregister').value,
+        useremailregister: document.getElementById('useremailregister').value,
+        imguruseraccesstoken: this.state.imgurInfo.access_token,
+        imguruserrefreshtoken: this.state.imgurInfo.refresh_token
+      },
+      json: true
+    }).then((data) => {
+      if(data.error === false) {
+        console.log(`Registered user, created session with: ${document.getElementById('usernameregister')}`);
+        localStorage.setItem('clientName', document.getElementById('usernameregister').value);
+        location.reload();
+        return;
+      }
+      // If error, show error
+      console.log(`Error while registering: ${JSON.stringify(data)}`);
+      this.setState({ error: true });
+    }).catch((err) => {
+      console.log(`Registration could not happen: ${err}`);
+    });
   }
 
   clearForm = (e) => {

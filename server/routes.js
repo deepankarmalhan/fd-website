@@ -45,7 +45,7 @@ module.exports = function(expressApp, path) {
     AuthAPI.register(req, function(authObj) {
       if(typeof(authObj.error) === 'undefined') {
         req.session.client = authObj;
-        return res.send(JSON.stringify({ message : "Successfully registered new account" }));
+        return res.send(JSON.stringify({ message : "Successfully registered new account", error: false }));
       }
       res.send(JSON.stringify(authObj));
     });
@@ -57,7 +57,7 @@ module.exports = function(expressApp, path) {
         if(err) {
           return res.send(JSON.stringify({ message : "Could not logout properly", error: true }));
         }
-        return res.send(JSON.stringify({ message : "Successfully logged out" }));
+        return res.send(JSON.stringify({ message : "Successfully logged out", error: false }));
       });
     }
     return res.send(JSON.stringify({ message : "Already logged out", error: true }));

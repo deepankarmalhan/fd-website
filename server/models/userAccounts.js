@@ -15,8 +15,8 @@ var userAccSchema = mongoose.Schema({
   passwd: { type: String, require: true },
   userEmail: {type: String, require: true, index: true, unique: true, uniqueCaseInsensitive: true},
   accountCreatedAt: {type: Date, default: Date.now},
-  imgurUserAccessToken: { type: String, required: true },
-  imgurUserRefreshToken: { type: String, required: true },
+  imgurUserAccessToken: { type: String, required: true , unique: true},
+  imgurUserRefreshToken: { type: String, required: true, unique: true },
 });
 
 userAccSchema.plugin(uniqueValidator);

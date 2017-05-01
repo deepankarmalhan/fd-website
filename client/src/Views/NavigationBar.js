@@ -7,16 +7,38 @@ export default class NavigationBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isMobile: this.props.isMobile
+      isMobile: this.props.isMobile,
+      loggedIn: false
     };
   }
 
+  componentWillMount() {
+    if(localStorage.clientName) {
+      this.setState({ loggedIn: true });
+    }
+  }
+
   render() {
+    var userMsg = '';
+    var logoutBtn = <div />;
+    var initialBtn = <Link className="nav-item" to="/auth">Login | Register</Link>
+
+    if(this.state.loggedIn) {
+      userMsg = `Hello, ${localStorage.getItem('clientName')}`;
+      logoutBtn = <Link className="nav-item" to="/auth/logoutcallback">Logout</Link>
+      initialBtn = <div />
+    }
+
     return (
       <header className="nav has-shadow">
-          <div className="nav-left">
+        <div className="nav-left">
+          <div className="nav-item">
             <Link className="title" to="/">Food Diary</Link>
           </div>
+          <div className="nav-item">
+            {userMsg}
+          </div>
+        </div>
 
           <span className={ (this.state.isMobile) ? 'nav-toggle is-active' : 'nav-toggle'} onClick={this.toggleMobileNav}>
             <span></span>
@@ -25,13 +47,12 @@ export default class NavigationBar extends Component {
           </span>
 
           <div className={ (this.state.isMobile) ? 'nav-right nav-menu is-active' : 'nav-right nav-menu'}>
-            <Link className={(this.props.currentActivePage === 'Login')? "nav-item is-active" : "nav-item"} to="/auth">
-              {(this.props.loggedIn) ? 'Home' : 'Login | Register'}
-            </Link>
-            <Link className={(this.props.currentActivePage === 'Dashboard')? "nav-item is-active" : "nav-item"} to="/dashboard">
+            {initialBtn}
+            {logoutBtn}
+            <Link className="nav-item" to="/dashboard">
               Dashboard
             </Link>
-            <Link className={(this.props.currentActivePage === 'Account')? "nav-item is-active" : "nav-item"} to="/myaccount">
+            <Link className="nav-item" to="/myaccount">
               My Account
             </Link>
             <span className="nav-item">

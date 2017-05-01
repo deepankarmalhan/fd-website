@@ -4,6 +4,7 @@ import '../bulma.css';
 import LoginBox from './LoginBox';
 import RegisterBox from './RegisterBox';
 import ImgurCallback from './ImgurCallback';
+import LogoutCallback from './LogoutCallback';
 
 export default class AuthenticationBox extends Component {
 
@@ -13,6 +14,12 @@ export default class AuthenticationBox extends Component {
 
   switchRegister = () => {
     this.props.history.push(`${this.props.match.url}/register`);
+  }
+
+  componentWillMount() {
+    if(localStorage.clientName) {
+      this.props.history.push(`/dashboard`);
+    }
   }
 
   render() {
@@ -51,6 +58,7 @@ export default class AuthenticationBox extends Component {
               <hr />
               <Route path={`${matchRoute}/register`} component={RegisterBox} />
               <Route path={`${matchRoute}/imgurcallback`} component={ImgurCallback} />
+              <Route path={`${matchRoute}/logoutcallback`} component={LogoutCallback} />
               <Route exact path={matchRoute} component={LoginBox} />
             </div>
           </div>

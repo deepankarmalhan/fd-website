@@ -3,6 +3,13 @@ import { Route } from 'react-router-dom';
 import LogsLayout from './LogsLayout';
 
 export default class DashboardMainLayout extends Component {
+
+  componentWillMount() {
+    if(!localStorage.clientName) {
+      this.props.history.push(`/auth`);
+    }
+  }
+
   render() {
     var matchRoute = this.props.match.url;
     return (

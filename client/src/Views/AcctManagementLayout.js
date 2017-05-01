@@ -4,6 +4,13 @@ import DeleteAccountBox from './DeleteAccountBox';
 import AcctInfoLayout from './AcctInfoLayout';
 
 export default class AcctManagementLayout extends Component {
+
+  componentWillMount() {
+    if(!localStorage.clientName) {
+      this.props.history.push(`/auth`);
+    }
+  }
+
   render() {
     var matchRoute = this.props.match.url;
     return (

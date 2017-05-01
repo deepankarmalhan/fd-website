@@ -24,12 +24,12 @@ export default class LoginBox extends Component {
       json: true
     }).then((data) => {
       if(data.authenticated) {
-        sessionStorage.setItem('clientName', document.getElementById('usernamelogin'));
-        this.props.history.push(`/dashboard`);
-        return;
+        localStorage.setItem('clientName', document.getElementById('usernamelogin').value);
+        location.reload();
       }
       console.log(`Authentication failed, ${JSON.stringify(data)}`);
       this.setState(data);
+      return;
       // Show an error of not having proper login ID
     }).catch((err) => {
       console.log(`Could not talk to server, ${JSON.stringify(err)}`);

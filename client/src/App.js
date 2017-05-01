@@ -28,7 +28,7 @@ class App extends Component {
   return check;
 };
   componentWillMount() {
-    if(sessionStorage.clientName) {
+    if(localStorage.clientName) {
       this.setState({ loggedIn: true });
     }
   }

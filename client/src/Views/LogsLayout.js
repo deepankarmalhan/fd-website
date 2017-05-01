@@ -7,7 +7,6 @@ import NewLogs from './NewLogs';
 export default class LogsLayout extends Component {
   render() {
     var matchRoute = this.props.match.url;
-    console.log(`LogsLayout matchRoute: ${matchRoute}`);
     return (
       <div>
         <h1 className="subtitle">LogsLayout rendered</h1>
