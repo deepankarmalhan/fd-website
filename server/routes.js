@@ -22,12 +22,6 @@ module.exports = function(expressApp, path) {
     })
   }));
 
-  expressApp.get('/', function(req, res) {
-    req.session.reload(function(err) {
-      throw err;
-    });
-  });
-
   expressApp.put('/api/test-session',function(req, res) {
     res.send(req.body);
   });
@@ -103,6 +97,6 @@ module.exports = function(expressApp, path) {
   // -------------------------------------------------------------------------
   expressApp.get('*', function(req, res) {
     res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
-    res.send('Hello World!');
+    //res.send('Hello World!');
   });
 };

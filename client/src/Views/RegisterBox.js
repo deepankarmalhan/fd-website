@@ -84,7 +84,7 @@ export default class RegisterBox extends Component {
         </div>
 
         <div className="field">
-          <label className="label">Imgur User Access Token<p className="help is-info">Click on the "Generate Tokens" button to generate this token</p></label>
+          <label className="label">Imgur User Refresh Token<p className="help is-info">Click on the "Generate Tokens" button to generate this token</p></label>
           <p className="control">
             <input id="userrefreshtoken" className="input" type="text" value={this.state.imgurInfo.refresh_token} readOnly disabled/>
           </p>
@@ -113,7 +113,7 @@ export default class RegisterBox extends Component {
         <div className="field">
           <label className="label">Username</label>
           <p className="control has-icons-left">
-            <input id="usernameregister" className="input" type="text" defaultValue={this.state.imgurInfo.account_username} />
+            <input id="usernameregister" className="input" type="text" defaultValue={this.state.imgurInfo.account_username} placeholder="Enter your username here"/>
             <span className="icon is-small is-left">
               <i className="fa fa-user"></i>
             </span>
