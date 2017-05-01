@@ -3,7 +3,6 @@
 */
 
 var bcrypt = require('bcryptjs');
-var ImgurAPI = require('./ImgurAPI');
 var UserAccount = require('../models/userAccounts');
 
 module.exports = {

@@ -22,10 +22,6 @@ module.exports = function(expressApp, path) {
     })
   }));
 
-  expressApp.put('/api/test-session',function(req, res) {
-    res.send(req.body);
-  });
-
   // -------------------------
   // Authentication Routes
   // -------------------------
@@ -71,7 +67,7 @@ module.exports = function(expressApp, path) {
     if(req.session.client) {
       AcctManageAPI.updateAcc(req, function(updatedAcc) {
         res.set('Content-Type', 'application/json');
-        return res.send(JSON.stringify(Object.assign({}, { message: "Successfully updated account" }, updatedAcc)));
+        return res.send(JSON.stringify(Object.assign({}, { message: "Successfully updated account" , error: false }, updatedAcc)));
       });
     }
     res.send(JSON.stringify({ message: "Please login to update your account", error: true }));
@@ -79,17 +75,35 @@ module.exports = function(expressApp, path) {
 
   expressApp.post('/api/accmanage/deleteacc', function(req, res) {
     if(req.session.client.userName == req.body.usernamedeleteacc) {
-      AcctManageAPI.deleteAcc(req, function(err) {
+      AcctManageAPI.deleteAcc(req, function(status) {
         res.set('Content-Type', 'application/json');
 
-        if(err) {
+        if(status.error === true) {
           return res.send(JSON.stringify({ message: "Could not delete account", error: true }));
         }
 
-        return res.send(JSON.stringify({ message: "Successfully deleted account", "username": req.body.usernamedeleteacc }));
+        return res.send(JSON.stringify({ message: "Successfully deleted account", error: false }));
       });
     }
     res.send(JSON.stringify({ message: "Please re-enter your username properly, or login, to delete your account", error: true }))
+  });
+
+  expressApp.post('/api/accmanage/getacctinfo',function(req, res) {
+    res.set('Content-Type', 'application/json');
+    AcctManageAPI.getAcc(req, function(user) {
+      res.send(user);
+    });
+  });
+
+  expressApp.get('/api/getimgurtoken', function(req, res) {
+    res.set('Content-Type', 'application/json');
+    AcctManageAPI.getAcc(req, function(user) {
+      if(user.error === true) {
+        return res.send(user);
+      }
+      var userImgurToken = user.imgurUserAccessToken;
+      res.send(JSON.stringify({ error: false, user_token: userImgurToken }));
+    })
   });
 
   // -------------------------------------------------------------------------
