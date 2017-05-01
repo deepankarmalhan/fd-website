@@ -101,8 +101,8 @@ module.exports = function(expressApp, path) {
       if(user.error === true) {
         return res.send(user);
       }
-      var userImgurToken = user.imgurUserAccessToken;
-      res.send(JSON.stringify({ error: false, user_token: userImgurToken }));
+      var userImgurToken = user._doc.imgurUserAccessToken;
+      res.send(JSON.stringify({ user_token: userImgurToken }));
     })
   });
 
