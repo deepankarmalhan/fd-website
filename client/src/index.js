@@ -6,6 +6,10 @@ import {
 } from 'react-router-dom';
 import App from './App';
 
+if(process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 ReactDOM.render(
   <Router>
       <Route path="/" component={ App } />

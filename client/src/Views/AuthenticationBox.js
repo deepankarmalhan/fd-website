@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 import '../bulma.css';
 import LoginBox from './LoginBox';
 import RegisterBox from './RegisterBox';
+import ImgurCallback from './ImgurCallback';
 
 export default class AuthenticationBox extends Component {
 
@@ -49,6 +50,7 @@ export default class AuthenticationBox extends Component {
               </div>
               <hr />
               <Route path={`${matchRoute}/register`} component={RegisterBox} />
+              <Route path={`${matchRoute}/imgurcallback`} component={ImgurCallback} />
               <Route exact path={matchRoute} component={LoginBox} />
             </div>
           </div>

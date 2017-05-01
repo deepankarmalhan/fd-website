@@ -36,7 +36,7 @@ class App extends Component {
   render() {
     var matchRoute = this.props.match.url;
     return (
-      <section className="hero is-primary is-fullheight is-bold">
+      <section className="hero is-light is-fullheight is-bold">
         <div className="hero-head">
           <NavigationBar currentActivePage={this.state.currentActivePage} loggedIn={this.state.loggedIn} isMobile={this.state.isMobile}/>
         </div>
