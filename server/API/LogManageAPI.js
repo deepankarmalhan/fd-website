@@ -13,8 +13,6 @@ module.exports = {
       // Found a user, now create a new pending log for them
       var newLog = {
         foodMass: req.request.body.mass,
-        photoRef: `http://i.imgur.com/${req.request.body.imageid}.jpg`,
-        photoThumbnail: `http://i.imgur.com/${req.request.body.imageid}m.jpg`,
         logMode: req.request.body.mode,
         ingredientsDetected: req.ing,
         logUser: req.request.body.username
@@ -25,7 +23,9 @@ module.exports = {
       }
 
       if(req.request.body.imageid){
-        newLog.photoId= req.request.body.imageid;
+        newLog.photoId = req.request.body.imageid;
+        newLog.photoRef= `http://i.imgur.com/${req.request.body.imageid}.jpg`;
+        newLog.photoThumbnail= `http://i.imgur.com/${req.request.body.imageid}m.jpg`;
       }
 
       console.log(`Created a new pendingLog: ${JSON.stringify(newLog)}`);

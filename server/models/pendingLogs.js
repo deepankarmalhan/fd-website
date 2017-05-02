@@ -7,8 +7,8 @@ var dbConnection = MongoDB.getDBInstance();
 
 var pendingLogSchema = mongoose.Schema({
   foodMass: Number,
-  photoRef: String,
-  photoThumbnail: String,
+  photoRef: { type: String, default: `http://i.imgur.com/91GyWJn.jpg`},
+  photoThumbnail: { type: String, default: `http://i.imgur.com/91GyWJnm.jpg`},
   photoId: { type: String, default: '91GyWJn' },
   logMode: String,
   ingredientsDetected: [{ type: String }],
