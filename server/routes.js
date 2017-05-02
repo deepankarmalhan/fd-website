@@ -127,6 +127,14 @@ module.exports = function(expressApp, path) {
     }
     else if(req.body.mode == 'barcode') {
       // Do nutritionix here
+      var ingredients = ['barcode', 'not', 'working'];
+      LogManageAPI.createNewPendingLog({request: req, ing: ingredients}, function(newLog) {
+        if(newLog.error) {
+          return res.send({ error: true, msg: "New log couldn't be created" });
+        }
+        return res.send(Object.assign({}, newLog, { error: false}));
+      });
+      return;
     }
     res.send(JSON.stringify({ error: true, msg: `Could not find a proper mode to add a new log, mode sent was ${req.body.mode}`}));
   });

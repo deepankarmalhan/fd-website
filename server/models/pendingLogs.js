@@ -9,10 +9,10 @@ var pendingLogSchema = mongoose.Schema({
   foodMass: Number,
   photoRef: String,
   photoThumbnail: String,
-  photoId: { type: String },
+  photoId: { type: String, default: '91GyWJn' },
   logMode: String,
   ingredientsDetected: [{ type: String }],
-  imgBarcode: Number,
+  imgBarcode: { type: Number, default: -1 },
   logUser: { type: String, ref: 'UserAccount' }
 });
 

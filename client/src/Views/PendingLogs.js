@@ -40,13 +40,14 @@ export default class PendingLogs extends Component {
     var indexKey = 0;
 
     return (
-      <table className="table is-striped">
+      <table className="table">
         <thead>
           <tr>
             <th>Log Number</th>
             <th>Image Preview</th>
             <th>Food Mass</th>
             <th>Log Mode(Image/Barcode)</th>
+            <th>UPC Code</th>
             <th>Ingredients Detected</th>
           </tr>
         </thead>
@@ -60,6 +61,7 @@ export default class PendingLogs extends Component {
                 </th>
                 <th>{(log.foodMass)/100}</th>
                 <th>{log.logMode}</th>
+                <th>{log.imgBarcode}</th>
                 <th>
                   {
                     log.ingredientsDetected.map((ing, ingIndex) => {
