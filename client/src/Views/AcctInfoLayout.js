@@ -44,9 +44,9 @@ export default class AcctInfoLayout extends Component {
   updateAcc = (e) => {
     e.preventDefault();
     if(
-      !document.getElementById('usernameregister').value ||
-      !document.getElementById('useremailregister').value ||
-      !document.getElementById('passwdregister').value
+      !document.getElementById('usernameupdate').value ||
+      !document.getElementById('useremailupdate').value ||
+      !document.getElementById('passwdupdate').value
     ) {
       this.setState({ reqError: true });
       return;
@@ -58,10 +58,10 @@ export default class AcctInfoLayout extends Component {
       firstnameupdate: document.getElementById('firstnameupdate').value,
       lastnameupdate: document.getElementById('lastnameupdate').value,
       usernameupdate: document.getElementById('usernameupdate').value,
-      useremailupdate: document.getElementById('useremailupdate').value
+      useremailupdate: document.getElementById('useremailupdate').value,
     }
     if(document.getElementById('passwdupdate').value) {
-      updateUser.passwdupdate = document.getElementById('passwdupdate');
+      updateUser.passwdupdate = document.getElementById('passwdupdate').value;
     }
     // Update account
     rp({
@@ -71,9 +71,11 @@ export default class AcctInfoLayout extends Component {
       json: true
     }).then((data) => {
       if(data.error) {
-        this.setState({ err: true });
+        console.log(`Send req, got an error response from the backend server, data is: ${JSON.stringify(data)}`);
+        this.setState({ err: true, msg: data.msg });
         return;
       }
+      console.log(`Send req, got res, worked`);
       this.props.history.push(`/dashboard`);
     }).catch((err) => {
       console.log(`Couldn't update account`);
@@ -88,7 +90,7 @@ export default class AcctInfoLayout extends Component {
 
   render() {
     var errorMsg = <div />
-    if(this.state.error) {
+    if(this.state.err) {
       errorMsg = (
         <div className="notification is-danger">
           <button className="delete is-small" onClick={this.hideError}></button>
@@ -102,9 +104,12 @@ export default class AcctInfoLayout extends Component {
       reqMsg = (<p className="help is-danger">Required field</p>);
     }
 
+    var user = this.state.user;
+    console.log(`Rendering update acc page, state is: ${JSON.stringify(user)}`);
+
     return (
       <div>
-        <h1 className="subtitle">Please review and update your account info below (leave unchanged fields with their default value)</h1>
+        <h1 className="subtitle">Please review and update your account info below<p className="help is-primary">Fill out all the fields with the old value if you don't want to update a particular field.</p></h1>
         <form id="updateForm">
           {errorMsg}
 
@@ -125,21 +130,21 @@ export default class AcctInfoLayout extends Component {
           <div className="field">
             <label className="label">First Name</label>
             <p className="control">
-              <input id="firstnameupdate" className="input" type="text" defaultValue={this.state.user.firstName}/>
+              <input id="firstnameupdate" className="input" type="text" defaultValue={user.firstName} placeholder="Enter your first name here"/>
             </p>
           </div>
 
           <div className="field">
             <label className="label">Last Name</label>
             <p className="control">
-              <input id="lastnameupdate" className="input" type="text" value={this.state.user.lastName} />
+              <input id="lastnameupdate" className="input" type="text" defaultValue={user.lastName} placeholder="Enter your last name here" />
             </p>
           </div>
 
           <div className="field">
             <label className="label">Username</label>
             <p className="control has-icons-left">
-              <input id="usernameupdate" className="input" type="text" value={this.state.user.userName}/>
+              <input id="usernameupdate" className="input" type="text" defaultValue={user.userName} placeholder="Enter your username here"/>
               <span className="icon is-small is-left">
                 <i className="fa fa-user"></i>
               </span>
@@ -150,7 +155,7 @@ export default class AcctInfoLayout extends Component {
           <div className="field">
             <label className="label">Email <p className="help is-info">Use real email to have the ability to reset your password</p></label>
             <p className="control has-icons-left">
-              <input id="useremailupdate" className="input" type="text" value={this.state.user.userEmail} />
+              <input id="useremailupdate" className="input" type="text" defaultValue={user.userEmail} placeholder="Enter your email here"/>
               <span className="icon is-small is-left">
                 <i className="fa fa-envelope"></i>
               </span>

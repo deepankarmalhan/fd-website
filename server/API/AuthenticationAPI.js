@@ -51,7 +51,8 @@ module.exports = {
         passwd: hash,
         userEmail: req.body.useremailregister,
         imgurUserAccessToken: req.body.imguruseraccesstoken,
-        imgurUserRefreshToken: req.body.imguruserrefreshtoken
+        imgurUserRefreshToken: req.body.imguruserrefreshtoken,
+        imgurAlbumID: req.body.imguralbumid
       };
 
       let newUserDocument = new UserAccount(newUser);

@@ -8,9 +8,7 @@ module.exports = {
       firstName: req.body.firstnameupdate,
       lastName: req.body.lastnameupdate,
       userName: req.body.usernameupdate,
-      userEmail: req.body.useremailupdate,
-      imgurUserAccessToken: req.body.imguruseraccesstokenupdate,
-      imgurUserRefreshToken: req.body.imguruserrefreshtoken
+      userEmail: req.body.useremailupdate
     };
 
     // If password was changed, hash and salt the new passwd and add it to the new doc
@@ -22,9 +20,7 @@ module.exports = {
     }
 
     UserAccount.findOneAndUpdate({userName: req.body.usernameupdate}, newDoc, {
-      new: true,
-      runValidators: true,
-      context: 'query'
+      new: true
     }, function (err, doc) {
       if(err || !doc) {
         return callback(Object.assign({}, {error: true}, err));

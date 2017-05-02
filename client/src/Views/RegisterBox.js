@@ -44,31 +44,49 @@ export default class RegisterBox extends Component {
     endpoint = (process.env.NODE_ENV === 'development') ? 'http://localhost:50001/api/auth/register' : 'https://fd-website.herokuapp.com/api/auth/register';
 
     // If everything is in order, register the user
+        // Create an Imgur
     rp({
       method: 'POST',
-      uri: endpoint,
+      uri: `https://api.imgur.com/3/album`,
       body: {
-        firstnameregister: document.getElementById('firstnameregister').value,
-        lastnameregister: document.getElementById('lastnameregister').value,
-        usernameregister: document.getElementById('usernameregister').value,
-        passwdregister: document.getElementById('passwdregister').value,
-        useremailregister: document.getElementById('useremailregister').value,
-        imguruseraccesstoken: this.state.imgurInfo.access_token,
-        imguruserrefreshtoken: this.state.imgurInfo.refresh_token
+        title: 'Food Diary'
+      },
+      headers: {
+        'Authorization': `Bearer ${this.state.imgurInfo.access_token}`
       },
       json: true
-    }).then((data) => {
-      if(data.error === false) {
-        console.log(`Registered user, created session with: ${document.getElementById('usernameregister')}`);
-        localStorage.setItem('clientName', document.getElementById('usernameregister').value);
-        location.reload();
+    }).then((imgurdata) => {
+      rp({
+        method: 'POST',
+        uri: endpoint,
+        body: {
+          firstnameregister: document.getElementById('firstnameregister').value,
+          lastnameregister: document.getElementById('lastnameregister').value,
+          usernameregister: document.getElementById('usernameregister').value,
+          passwdregister: document.getElementById('passwdregister').value,
+          useremailregister: document.getElementById('useremailregister').value,
+          imguruseraccesstoken: this.state.imgurInfo.access_token,
+          imguruserrefreshtoken: this.state.imgurInfo.refresh_token,
+          imguralbumid: imgurdata.data.id
+        },
+        json: true
+      }).then((data) => {
+        if(data.error === false) {
+          console.log(`Registered user, created session with: ${document.getElementById('usernameregister')}`);
+          localStorage.setItem('clientName', document.getElementById('usernameregister').value);
+          location.reload();
+        }
+
+        console.log(`Error while registering: ${JSON.stringify(data)}`);
+        this.setState({ error: true });
+      }).catch((registeringerr)=> {
+        console.log(`Error occured while registering user, ${JSON.stringify(registeringerr)}`);
         return;
-      }
-      // If error, show error
-      console.log(`Error while registering: ${JSON.stringify(data)}`);
-      this.setState({ error: true });
+      });
+      return;
     }).catch((err) => {
-      console.log(`Registration could not happen: ${err}`);
+      console.log(`Error occured while creating Imgur album`);
+      return;
     });
   }
 
@@ -105,6 +123,8 @@ export default class RegisterBox extends Component {
       // Extract out the tokens here prob
       submitBtn = <button className="button is-primary" onClick={this.registerForm}>Register</button>;
     }
+
+    console.log(`Register box is getting rendered`);
 
     return (
       <form id="registerForm">

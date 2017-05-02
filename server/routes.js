@@ -64,13 +64,11 @@ module.exports = function(expressApp, path) {
   // ---------------------------------
 
   expressApp.post('/api/accmanage/updateacc', function(req, res) {
-    if(req.session.client) {
       AcctManageAPI.updateAcc(req, function(updatedAcc) {
         res.set('Content-Type', 'application/json');
         return res.send(JSON.stringify(Object.assign({}, { message: "Successfully updated account" , error: false }, updatedAcc)));
       });
-    }
-    res.send(JSON.stringify({ message: "Please login to update your account", error: true }));
+    //res.send(JSON.stringify({ message: "Please login to update your account", error: true }));
   });
 
   expressApp.post('/api/accmanage/deleteacc', function(req, res) {
@@ -101,8 +99,8 @@ module.exports = function(expressApp, path) {
       if(user.error === true) {
         return res.send(user);
       }
-      var userImgurToken = user._doc.imgurUserAccessToken;
-      res.send(JSON.stringify({ user_token: userImgurToken }));
+      var userImgurToken = user._doc;
+      res.send(JSON.stringify({ user_token: userImgurToken.imgurUserAccessToken, imgurAlbumID: userImgurToken.imgurAlbumID }));
     })
   });
 

@@ -17,6 +17,7 @@ var userAccSchema = mongoose.Schema({
   accountCreatedAt: {type: Date, default: Date.now},
   imgurUserAccessToken: { type: String, required: true , unique: true},
   imgurUserRefreshToken: { type: String, required: true, unique: true },
+  imgurAlbumID: {type: String, required: true}
 });
 
 userAccSchema.plugin(uniqueValidator);
