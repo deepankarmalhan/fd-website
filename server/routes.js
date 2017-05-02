@@ -125,10 +125,9 @@ module.exports = function(expressApp, path) {
       });
       return;
     }
-    //else if(req.body.mode == 'barcode') {
+    else if(req.body.mode == 'barcode') {
       // Do nutritionix here
-    //  return;
-    //}
+    }
     res.send(JSON.stringify({ error: true, msg: `Could not find a proper mode to add a new log, mode sent was ${req.body.mode}`}));
   });
 
@@ -137,6 +136,5 @@ module.exports = function(expressApp, path) {
   // -------------------------------------------------------------------------
   expressApp.get('*', function(req, res) {
     res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
-    //res.send('Hello World!');
   });
 };
