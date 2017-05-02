@@ -7,6 +7,8 @@ var AcctManageAPI = require('./API/AcctManagementAPI');
 var MongoDB = require('./API/MongooseAPI');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
+var ClarifaiAPI = require('./API/ClarifaiAPI');
+var LogManageAPI = require('./API/LogManageAPI');
 
 module.exports = function(expressApp, path) {
   // --------------------------------
@@ -101,7 +103,33 @@ module.exports = function(expressApp, path) {
       }
       var userImgurToken = user._doc;
       res.send(JSON.stringify({ user_token: userImgurToken.imgurUserAccessToken, imgurAlbumID: userImgurToken.imgurAlbumID }));
-    })
+    });
+  });
+
+  // --------------------------------------------------------------------
+  // Create/Update logs
+  // --------------------------------------------------------------------
+
+  expressApp.post(`/api/createlog`, function(req, res) {
+    res.set('Content-Type', 'application/json');
+    // Check if req.body.mode === 'image'
+    if(req.body.mode.trim() == 'image') {
+      ClarifaiAPI.getImgInfo(req, function(ingredients) {
+        LogManageAPI.createNewPendingLog({request: req, ing: ingredients}, function(newLog) {
+          if(newLog.error) {
+            return res.send({ error: true, msg: "New log couldn't be created" });
+          }
+          return res.send(Object.assign({}, newLog, { error: false}));
+        });
+        return;
+      });
+      return;
+    }
+    //else if(req.body.mode == 'barcode') {
+      // Do nutritionix here
+    //  return;
+    //}
+    res.send(JSON.stringify({ error: true, msg: `Could not find a proper mode to add a new log, mode sent was ${req.body.mode}`}));
   });
 
   // -------------------------------------------------------------------------

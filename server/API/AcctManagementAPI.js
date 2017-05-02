@@ -42,7 +42,10 @@ module.exports = {
   },
 
   getAcc: function(req, callback) {
-    UserAccount.findOne({userName: req.body.username}, function(err, doc) {
+    UserAccount
+    .findOne({userName: req.body.username})
+    .populate('pendingLogs')
+    .exec(function(err, doc) {
       if(!doc) {
         return callback(Object.assign({}, {error: true, msg: 'Could not find the user'}));
       }
@@ -50,6 +53,6 @@ module.exports = {
       var modifiedDoc = doc;
       modifiedDoc.passwd = null;
       return callback(Object.assign({}, {error: false}, modifiedDoc));
-    })
+    });
   }
 };

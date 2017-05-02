@@ -123,9 +123,7 @@ export default class RegisterBox extends Component {
       // Extract out the tokens here prob
       submitBtn = <button className="button is-primary" onClick={this.registerForm}>Register</button>;
     }
-
-    console.log(`Register box is getting rendered`);
-
+    
     return (
       <form id="registerForm">
         {errorMsg}

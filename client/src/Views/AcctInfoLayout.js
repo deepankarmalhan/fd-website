@@ -105,8 +105,7 @@ export default class AcctInfoLayout extends Component {
     }
 
     var user = this.state.user;
-    console.log(`Rendering update acc page, state is: ${JSON.stringify(user)}`);
-
+    
     return (
       <div>
         <h1 className="subtitle">Please review and update your account info below<p className="help is-primary">Fill out all the fields with the old value if you don't want to update a particular field.</p></h1>
