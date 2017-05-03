@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import rp from 'request-promise';
-import classnames from 'classnames';
 
 export default class PendingLogs extends Component {
   constructor(props) {
@@ -36,7 +35,6 @@ export default class PendingLogs extends Component {
   }
 
   render() {
-    var tagClassNames = ['is-primary', 'is-info', 'is-success', 'is-warning'];
     var indexKey = 0;
 
     return (
@@ -57,7 +55,7 @@ export default class PendingLogs extends Component {
               <tr key={curIndex+1}>
                 <th>{curIndex+1}</th>
                 <th>
-                  <img className="image" src={log.photoThumbnail}/>
+                  <img className="image" alt="Thumbnail of this pending food log" src={log.photoThumbnail}/>
                 </th>
                 <th>{(log.foodMass)/100}</th>
                 <th>{log.logMode}</th>
@@ -65,11 +63,9 @@ export default class PendingLogs extends Component {
                 <th>
                   {
                     log.ingredientsDetected.map((ing, ingIndex) => {
+                      var tagClassNames = ['is-primary', 'is-info', 'is-success', 'is-warning', 'is-light'];
                       var tagType = tagClassNames[Math.floor(Math.random() * tagClassNames.length)];
-                      var ingClassName = classnames({
-                        tag: true,
-                        tagType: true
-                      });
+                      var ingClassName = `tag ${tagType}`;
                       return <span key={indexKey++} className={ingClassName}>{ing}</span>
                     })
                   }

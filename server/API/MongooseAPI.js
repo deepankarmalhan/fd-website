@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 var Promise = require('bluebird');
 
 var MongoDB;
-var connectionURI = process.env.MONGODB_URI || `mongodb://localhost:${process.env.TEST_DB_PORT}/${process.env.TEST_DB_NAME}`;
+var connectionURI = process.env.MONGODB_URI || `mongodb://localhost:27017/devtestdb`;
 var connectionOptions = { promiseLibrary: Promise };
 
 module.exports = {

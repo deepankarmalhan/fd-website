@@ -9,6 +9,7 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var ClarifaiAPI = require('./API/ClarifaiAPI');
 var LogManageAPI = require('./API/LogManageAPI');
+var NutritionixAPI = require('./API/NutritionixAPI');
 
 module.exports = function(expressApp, path) {
   // --------------------------------
@@ -127,12 +128,17 @@ module.exports = function(expressApp, path) {
     }
     else if(req.body.mode == 'barcode') {
       // Do nutritionix here
-      var ingredients = ['barcode', 'not', 'working'];
-      LogManageAPI.createNewPendingLog({request: req, ing: ingredients}, function(newLog) {
-        if(newLog.error) {
-          return res.send({ error: true, msg: "New log couldn't be created" });
+      NutritionixAPI.getIngredients(req, function(ingredients) {
+        if(ingredients.error) {
+          return res.send({ error: true, msg: "New log couldn't be created because nutritionix api had an error" });
         }
-        return res.send(Object.assign({}, newLog, { error: false}));
+        LogManageAPI.createNewPendingLog({request: req, ing: ingredients}, function(newLog) {
+          if(newLog.error) {
+            return res.send({ error: true, msg: "New log couldn't be created" });
+          }
+          return res.send(Object.assign({}, newLog, { error: false}));
+        });
+        return;
       });
       return;
     }
