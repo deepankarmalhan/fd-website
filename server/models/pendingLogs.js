@@ -13,7 +13,8 @@ var pendingLogSchema = mongoose.Schema({
   logMode: String,
   ingredientsDetected: [{ type: String }],
   imgBarcode: { type: Number, default: -1 },
-  logUser: { type: String, ref: 'UserAccount' }
+  logUser: { type: String, ref: 'UserAccount' },
+  logCreatedAt: { type: Date, default: Date.now }
 });
 
 pendingLogSchema.path('foodMass').set(function(num) {
