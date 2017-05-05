@@ -50,5 +50,13 @@ module.exports = {
         })
       });
     });
+  },
+
+  removeOnePendingLog: function(req, callback) {
+
+  },
+
+  createNewAcceptedLog: function(req, callback) {
+    //TODO: Normalize the data for each field here
   }
 };

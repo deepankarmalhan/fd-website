@@ -22,7 +22,7 @@ pendingLogSchema.path('foodMass').set(function(num) {
 });
 
 pendingLogSchema.path('foodMass').get(function(num) {
-  return (num/100).toFixed(2);
+  return (num/100);
 })
 
 pendingLogSchema.plugin(uniqueValidator);
